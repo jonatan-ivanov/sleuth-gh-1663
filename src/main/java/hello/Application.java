@@ -3,6 +3,8 @@ package hello;
 
 import javax.jms.ConnectionFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
@@ -16,8 +18,9 @@ import org.springframework.jms.support.converter.MappingJackson2MessageConverter
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
-@SpringBootApplication
+@Slf4j
 @EnableJms
+@SpringBootApplication
 public class Application {
 
 	@Bean
@@ -45,8 +48,7 @@ public class Application {
 		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
 
 		// Send a message with a POJO - the template reuse the message converter
-		System.out.println("Sending an email message.");
+		log.info("Sending an email message.");
 		jmsTemplate.convertAndSend("mailbox", new Email("info@example.com", "Hello"));
 	}
-
 }
